@@ -191,15 +191,6 @@ plugins:
       links_attr_map:
         target: _blank
         rel: external
-  - redirects:
-      redirect_maps:
-        embed/index.md: hosting/oem-deployment/index.md
-        embed/prerequisites.md: hosting/architecture/infrastructure-sizing.md
-        embed/deployment.md: hosting/architecture/infrastructure-sizing.md
-        embed/configuration.md: hosting/configuration/environment-variables/credentials.md
-        embed/managing-workflows.md: hosting/oem-deployment/managing-workflows.md
-        embed/workflow-templates.md: hosting/configuration/configuration-examples/custom-templates.md
-        embed/white-labelling.md: hosting/oem-deployment/white-labelling.md
   # https://github.com/pawamoy/mkdocs-llmstxt
   - llmstxt:
       markdown_description: |

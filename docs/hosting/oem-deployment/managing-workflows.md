@@ -1,16 +1,16 @@
 ---
 title: Managing workflows
-description: Patterns for managing workflows across multiple users or organizations in a white-label n8n deployment.
+description: Patterns for managing workflows across multiple users or organizations in a white label n8n deployment.
 contentType: howto
 ---
 
 # Managing workflows
 
 /// info | OEM agreement required
-White-labelling n8n requires a separate commercial agreement with n8n. [Contact n8n](mailto:license@n8n.io) for more information.
+White labelling n8n as part of an OEM deployment requires a separate commercial agreement with n8n. [Contact n8n](mailto:license@n8n.io) for more information.
 ///
 
-When managing a white-label n8n deployment spanning across teams or organizations, you will likely need to run the same (or similar) workflows for multiple users. There are two available options for doing so:
+When managing a white labelled n8n OEM deployment spanning across teams or organizations, you will likely need to run the same (or similar) workflows for multiple users. There are two available options for doing so:
 
 | Solution | Pros | Cons |
 | -------- | ---- | ---- |
@@ -98,7 +98,7 @@ The response will contain the ID of the new credentials, which you will use when
 
 ### 3. Create the workflow
 
-Best practice is to have a "base" workflow that you then duplicate and customize for each new user with their credentials (and any other details).
+Best practice is to have a “base” workflow that you then duplicate and customize for each new user with their credentials (and any other details).
 
 You can duplicate and customize your template workflow using either the Editor UI or API call.
 
@@ -164,9 +164,185 @@ The response will contain the JSON data of the selected workflow:
         "credentials": {
           "httpHeaderAuth": "beginner_course"
         }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "application": "appKBGQfbm6NfW6bv",
+          "table": "processingOrders",
+          "options": {}
+        },
+        "name": "Airtable",
+        "type": "n8n-nodes-base.airtable",
+        "typeVersion": 1,
+        "position": [
+          990,
+          210
+        ],
+        "credentials": {
+          "airtableApi": "Airtable"
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{$json[\"orderStatus\"]}}",
+                "value2": "processing"
+              }
+            ]
+          }
+        },
+        "name": "IF",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          630,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "number": [
+              {
+                "name": "=orderId",
+                "value": "={{$json[\"orderID\"]}}"
+              }
+            ],
+            "string": [
+              {
+                "name": "employeeName",
+                "value": "={{$json[\"employeeName\"]}}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "name": "Set",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 1,
+        "position": [
+          800,
+          210
+        ]
+      },
+      {
+        "parameters": {
+          "functionCode": "let totalBooked = items.length;\nlet bookedSum = 0;\n\nfor(let i=0; i < items.length; i++) {\n  bookedSum = bookedSum + items[i].json.orderPrice;\n}\nreturn [{json:{totalBooked, bookedSum}}]\n"
+        },
+        "name": "Function",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          800,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "webhookUri": "https://discord.com/api/webhooks/865213348202151968/oD5_WPDQwtr22Vjd_82QP3-_4b_lGhAeM7RynQ8Js5DzyXrQEnj0zeAQIA6fki1JLtXE",
+          "text": "=This week we have {{$json[\"totalBooked\"]}} booked orders with a total value of {{$json[\"bookedSum\"]}}. My Unique ID: {{ $(\"HTTP Request\").params.headerParameters.parameters[0].value }}"
+        },
+        "name": "Discord",
+        "type": "n8n-nodes-base.discord",
+        "typeVersion": 1,
+        "position": [
+          1000,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "triggerTimes": {
+            "item": [
+              {
+                "mode": "everyWeek",
+                "hour": 9
+              }
+            ]
+          }
+        },
+        "name": "Cron",
+        "type": "n8n-nodes-base.cron",
+        "typeVersion": 1,
+        "position": [
+          220,
+          300
+        ]
       }
     ],
-    "connections": {},
+    "connections": {
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "IF",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Start": {
+        "main": [
+          []
+        ]
+      },
+      "IF": {
+        "main": [
+          [
+            {
+              "node": "Set",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Function",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set": {
+        "main": [
+          [
+            {
+              "node": "Airtable",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Function": {
+        "main": [
+          [
+            {
+              "node": "Discord",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Cron": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
     "createdAt": "2021-07-16T11:15:46.066Z",
     "updatedAt": "2021-07-16T12:05:44.045Z",
     "settings": {},
@@ -213,8 +389,8 @@ There are four steps to follow to implement this method:
 The details and scope of this workflow will vary greatly according to the individual use case, however there are a few design implementations to keep in mind:
 
 * This workflow must be triggered by a [Webhook](/integrations/builtin/core-nodes/n8n-nodes-base.webhook/index.md) node.
-* The incoming webhook call must contain the user's credentials and any other workflow parameters required.
-* Each node where the user's credentials are needed should use an [expression](/data/expressions.md) so that the node's credential field reads the credential provided in the webhook call.
+* The incoming webhook call must contain the user’s credentials and any other workflow parameters required.
+* Each node where the user’s credentials are needed should use an [expression](/data/expressions.md) so that the node’s credential field reads the credential provided in the webhook call.
 * Save and publish the workflow, ensuring the production URL is selected for the Webhook node. Refer to [webhook node](/integrations/builtin/core-nodes/n8n-nodes-base.webhook/index.md) for more information.
 
 ### Call the workflow

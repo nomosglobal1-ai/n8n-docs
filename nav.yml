@@ -1303,7 +1303,7 @@ nav:
       - Restrict account registration to email-verified users: hosting/securing/restrict-by-email-verification.md
     - Starter Kits:
       - AI Starter Kit: hosting/starter-kits/ai-starter-kit.md
-    - White-labelling:
+    - OEM deployment:
       - Overview: hosting/oem-deployment/index.md
       - White-labelling: hosting/oem-deployment/white-labelling.md
       - Managing workflows: hosting/oem-deployment/managing-workflows.md
