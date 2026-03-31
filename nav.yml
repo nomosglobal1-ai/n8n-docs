@@ -1304,9 +1304,9 @@ nav:
     - Starter Kits:
       - AI Starter Kit: hosting/starter-kits/ai-starter-kit.md
     - White-labelling:
-      - Overview: hosting/white-labelling/index.md
-      - White-labelling: hosting/white-labelling/white-labelling.md
-      - Managing workflows: hosting/white-labelling/managing-workflows.md
+      - Overview: hosting/oem-deployment/index.md
+      - White-labelling: hosting/oem-deployment/white-labelling.md
+      - Managing workflows: hosting/oem-deployment/managing-workflows.md
     - Architecture:
       - Overview: hosting/architecture/overview.md
       - Database structure: hosting/architecture/database-structure.md
