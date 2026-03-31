@@ -8,7 +8,7 @@ info:
   license:
     name: Sustainable Use License
     url: https://github.com/n8n-io/n8n/blob/master/LICENSE.md
-  version: 1.1.1
+  version: 1.1.0
 servers:
   - url: /api/v1
 security:
@@ -898,6 +898,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/workflow'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /workflows/{id}/archive:
+    post:
+      x-eov-operation-id: archiveWorkflow
+      x-eov-operation-handler: v1/handlers/workflows/workflows.handler
+      tags:
+        - Workflow
+      summary: Archive a workflow
+      description: |
+        Soft-deletes a workflow by archiving it. Idempotent: archiving an
+        already archived workflow returns 200 with the current workflow.
+
+        Requires API key scope `workflow:delete`.
+      parameters:
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Archived workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workflow'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /workflows/{id}/unarchive:
+    post:
+      x-eov-operation-id: unarchiveWorkflow
+      x-eov-operation-handler: v1/handlers/workflows/workflows.handler
+      tags:
+        - Workflow
+      summary: Unarchive a workflow
+      description: |
+        Restores an archived workflow.
+
+        Requires API key scope `workflow:delete`.
+      parameters:
+        - $ref: '#/components/parameters/workflowId'
+      responses:
+        '200':
+          description: Unarchived workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/workflow'
+        '400':
+          $ref: '#/components/responses/badRequest'
         '401':
           $ref: '#/components/responses/unauthorized'
         '404':
