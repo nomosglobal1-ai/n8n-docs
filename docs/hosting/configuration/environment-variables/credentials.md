@@ -26,6 +26,8 @@ Enable credential overwrites using the following environment variables. Refer to
 
 Credential overwrites let you set credential data globally. This data isn't visible to users, but n8n uses it automatically in the background — for example, to enable OAuth login via a "Connect" button without exposing client secrets.
 
+In the Editor UI, n8n hides all overwritten fields by default, so users can authenticate via OAuth using the "Connect" button on the credential.
+
 n8n offers two ways to apply credential overwrites:
 
 ### Using environment variables
