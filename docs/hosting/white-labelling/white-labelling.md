@@ -1,12 +1,16 @@
 ---
+title: White-labelling
+description: Customize n8n's frontend styling, logos, and text to match your brand identity.
 contentType: howto
 ---
 
-# White labelling
+# White-labelling
 
---8<-- "_snippets/embed-license.md"
+/// info | OEM agreement required
+White-labelling n8n requires a separate commercial agreement with n8n. [Contact n8n](mailto:license@n8n.io) for more information.
+///
 
-White labelling n8n means customizing the frontend styling and assets to match your brand identity. The process involves changing two packages in n8n's source code [github.com/n8n-io/n8n](https://github.com/n8n-io/n8n):
+White-labelling n8n means customizing the frontend styling and assets to match your brand identity. The process involves changing two packages in n8n's source code [github.com/n8n-io/n8n](https://github.com/n8n-io/n8n):
 
 * [packages/frontend/@n8n/design-system](https://github.com/n8n-io/n8n/tree/master/packages/frontend/@n8n/design-system): n8n's [storybook](https://storybook.js.org/) design system with CSS styles and Vue.js components
 * [packages/frontend/editor-ui](https://github.com/n8n-io/n8n/tree/master/packages/frontend/editor-ui): n8n's [Vue.js](https://vuejs.org/) frontend build with [Vite.js](https://vitejs.dev)
@@ -66,7 +70,7 @@ In the following example the primary color changes to <span style="color:#0099ff
 
 ## Theme logos
 
-To change the editor’s logo assets look into [packages/frontend/editor-ui/public](https://github.com/n8n-io/n8n/tree/master/packages/frontend/editor-ui/public) and replace:
+To change the editor's logo assets look into [packages/frontend/editor-ui/public](https://github.com/n8n-io/n8n/tree/master/packages/frontend/editor-ui/public) and replace:
 
 - favicon-16x16.png
 - favicon-32x32.png
@@ -157,7 +161,3 @@ const DEFAULT_TAGLINE = 'Workflow Automation';
 ```
 
 ![Example Window Title Localization](/_images/embed/white-label/window-title.png)
-
-
-
-

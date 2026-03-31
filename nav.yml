@@ -1273,6 +1273,7 @@ nav:
         - Specify user folder path: hosting/configuration/configuration-examples/user-folder.md
         - Configure webhook URLs with reverse proxy: hosting/configuration/configuration-examples/webhook-url.md
         - Enable Prometheus metrics: hosting/configuration/configuration-examples/prometheus.md
+        - Configure a custom workflow templates library: hosting/configuration/configuration-examples/custom-templates.md
       - Supported databases and settings: hosting/configuration/supported-databases-settings.md
       - Task runners: hosting/configuration/task-runners.md
       - User management: hosting/configuration/user-management-self-hosted.md
@@ -1302,9 +1303,14 @@ nav:
       - Restrict account registration to email-verified users: hosting/securing/restrict-by-email-verification.md
     - Starter Kits:
       - AI Starter Kit: hosting/starter-kits/ai-starter-kit.md
+    - White-labelling:
+      - Overview: hosting/white-labelling/index.md
+      - White-labelling: hosting/white-labelling/white-labelling.md
+      - Managing workflows: hosting/white-labelling/managing-workflows.md
     - Architecture:
       - Overview: hosting/architecture/overview.md
       - Database structure: hosting/architecture/database-structure.md
+      - Infrastructure sizing: hosting/architecture/infrastructure-sizing.md
     - Using the CLI:
       - CLI commands: hosting/cli-commands.md
   - Code in n8n:
@@ -1371,14 +1377,6 @@ nav:
       - Pagination: api/pagination.md
       - Using an API playground: api/using-api-playground.md
       - API reference: api/api-reference.md
-  - Embed:
-      - embed/index.md
-      - Prerequisites: embed/prerequisites.md
-      - Deployment: embed/deployment.md
-      - Configuration: embed/configuration.md
-      - Workflow management: embed/managing-workflows.md
-      - Workflows templates: embed/workflow-templates.md
-      - White labelling: embed/white-labelling.md
   # - Feature tests:
   #    - Main features: docs-site-feature-tests/index.md
 
